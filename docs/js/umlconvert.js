@@ -1,10 +1,9 @@
 // Source: https://github.com/hahadaphne/mkdocs_UML/blob/master/docs/js/umlconvert.js
 (function (document) {
     function convertUML(className, converter, settings) {
-        var charts = document.querySelectorAll("pre.highlight,div." + className),
+        var charts = document.querySelectorAll("code." + className),
             arr = [],
-            i, j, maxItem, diagram, text, curNode,
-            isPre;
+            i, j, maxItem, diagram, text;
 
         // Is there a settings object?
         if (settings === void 0) {
@@ -16,41 +15,22 @@
 
         // Find the UML source element and get the text
         for (i = 0, maxItem = arr.length; i < maxItem; i++) {
-            isPre = arr[i].tagName.toLowerCase() == 'pre';
-            if (isPre) {
-                // Handles <pre><code>
-                var childEl = arr[i].firstChild;
-                var parentEl = childEl.parentNode;
-                text = "";
-                for (j = 0; j < childEl.childNodes.length; j++) {
-                    curNode = childEl.childNodes[j];
-                    var whitespace = /^\s*$/;
-                    if (curNode.nodeName === "#text" && !(whitespace.test(curNode.nodeValue))) {
-                        text = curNode.nodeValue;
-                        break;
-                    }
-                }
-                // Do UML conversion and replace source
-                var el = document.createElement('div');
-                el.className = className;
-                parentEl.parentNode.insertBefore(el, parentEl);
-                parentEl.parentNode.removeChild(parentEl);
+            parentEl = arr[i].parentNode;
+            text = arr[i].textContent || arr[i].innerText;
+            if (arr[i].innerText){
+                arr[i].innerText = '';
             } else {
-                // Handles <div>
-                el = arr[i];
-                text = el.textContent || el.innerText;
-                if (el.innerText){
-                    el.innerText = '';
-                } else {
-                    el.textContent = '';
-                }
+                arr[i].textContent = '';
             }
 
+            el = document.createElement('div');
+            el.className = className;
+            parentEl.parentNode.insertBefore(el, parentEl);
+            parentEl.parentNode.removeChild(parentEl);
 
             // sequence-diagram.js
             diagram = converter.parse(text);
             diagram.drawSVG(el, settings);
-
 
         }
     }
