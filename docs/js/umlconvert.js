@@ -15,7 +15,7 @@
 
         // Find the UML source element and get the text
         for (i = 0, maxItem = arr.length; i < maxItem; i++) {
-            parentEl = arr[i].parentNode;
+            var parentEl = arr[i].parentNode;
             text = arr[i].textContent || arr[i].innerText;
             if (arr[i].innerText){
                 arr[i].innerText = '';
