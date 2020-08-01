@@ -5,7 +5,6 @@
             arr = [],
             i, j, maxItem, diagram, text;
 
-
         // Is there a settings object?
         if (settings === void 0) {
             settings = {};
@@ -13,7 +12,6 @@
 
         // Make sure we are dealing with an array
         for(i = 0, maxItem = charts.length; i < maxItem; i++) arr.push(charts[i]);
-
 
         // Find the UML source element and get the text
         for (i = 0, maxItem = arr.length; i < maxItem; i++) {
@@ -25,7 +23,7 @@
                 arr[i].textContent = '';
             }
 
-            el = document.createElement('div');
+            var el = document.createElement('div');
             el.className = className;
             parentEl.parentNode.insertBefore(el, parentEl);
             parentEl.parentNode.removeChild(parentEl);

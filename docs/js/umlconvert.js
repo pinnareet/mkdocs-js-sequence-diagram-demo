@@ -23,7 +23,7 @@
                 arr[i].textContent = '';
             }
 
-            el = document.createElement('div');
+            var el = document.createElement('div');
             el.className = className;
             parentEl.parentNode.insertBefore(el, parentEl);
             parentEl.parentNode.removeChild(parentEl);
